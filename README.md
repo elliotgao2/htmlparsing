@@ -1,6 +1,8 @@
 # HTML Parsing
 
 Pure HTML parsing library.
+[Requests HTML](https://github.com/kennethreitz/requests-html) without requests.
+
 
 ## Installation
 
