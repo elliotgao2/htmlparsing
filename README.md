@@ -6,6 +6,10 @@ Pure HTML parsing library.
 
 ```python
 pip install htmlparsing
+
+# or
+
+pip install git+https://github.com/gaojiuli/htmlparsing
 ```
 
 ## Usage
