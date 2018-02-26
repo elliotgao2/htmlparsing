@@ -2,8 +2,10 @@
 
 ## Installation
 
+only support python3.
+
 ```python
-pipenv install htmlparsing
+pip install htmlparsing
 ```
 
 ## Usage
