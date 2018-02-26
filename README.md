@@ -49,13 +49,13 @@ e.parse('<a href="#content" title="Skip to content">{}</a>')
 """<Result ('Skip to content',) {}>"""
 
 # Get content or html
-e.xpath('//a')[5].text
+e.css('a')[5].text
 """PyPI"""
 
-e.xpath('//a')[5].html
+e.css('a')[5].html
 """<a href="https://pypi.python.org/" title="Python Package Index">PyPI</a>"""
 
-e.xpath('//a')[5].markdown
+e.css('a')[5].markdown
 """[PyPI](https://pypi.python.org/ "Python Package Index")"""
 
 ```
