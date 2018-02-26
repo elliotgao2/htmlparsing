@@ -1,8 +1,8 @@
-# HTML Parsing: Pure HTML parsing library.
+# HTML Parsing
+
+Pure HTML parsing library.
 
 ## Installation
-
-only support python3.
 
 ```python
 pip install htmlparsing
