@@ -49,7 +49,7 @@ class Element:
         return [r for r in findall(template, self.html)]
 
     def css(self, selector):
-        return [Element(html.tostring(e).decode('utf-8'), self.base_url) for e in self.element.cssselect(selector)]
+        return [Element(html.tostring(e).decode().strip(), self.base_url) for e in self.element.cssselect(selector)]
 
     def xpath(self, selector):
-        return [Element(html.tostring(e).decode('utf-8'), self.base_url) for e in self.element.xpath(selector)]
+        return [Element(html.tostring(e).decode().strip(), self.base_url) for e in self.element.xpath(selector)]
