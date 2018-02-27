@@ -2,9 +2,9 @@ from setuptools import find_packages, setup
 
 setup(
     name="htmlparsing",
-    version="0.0.1",
+    version="0.0.2",
     description="Pure HTML parsing library.",
-    author="Gaojiuli",
+    author="Jiuli Gao",
     author_email="gaojiuli@gmail.com",
     url='https://github.com/gaojiuli/htmlparsing',
     classifiers=[
