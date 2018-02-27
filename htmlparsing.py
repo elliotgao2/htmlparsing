@@ -16,7 +16,7 @@ class Element:
 
     def __init__(self, text, base_url=''):
         self.html = text
-        self.base_url = base_url.strip('/')
+        self.base_url = base_url.lstrip('/')
         self.element = html.fromstring(text)
 
     def __repr__(self):
@@ -40,15 +40,7 @@ class Element:
 
     @property
     def absolute_links(self):
-        results = []
-        for link in self.links:
-            if ':' not in link:
-                if link.startswith('/'):
-                    href = '{}{}'.format(self.base_url, link)
-                else:
-                    href = '{}/{}'.format(self.base_url, link)
-                results.append(href)
-        return set(results)
+        return set(['{}/{}'.format(self.base_url, link.lstrip('/')) for link in self.links if ':' not in link])
 
     def parse(self, template):
         return parse_search(template, self.html)

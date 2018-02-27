@@ -2,7 +2,7 @@ import requests
 
 from htmlparsing import Element
 
-url = 'https://python.org'
+url = 'https://python.org/'
 r = requests.get(url)
 
 # init
@@ -28,7 +28,7 @@ print(e.xpath('//a')[0].attrs.title)
 print(e.css('a')[0].attrs)
 """{'href': '#content', 'title': 'Skip to content'}"""
 
-print(e.parse('<a href="#content" title="Skip to content">{}</a>'))
+print(e.parse('<a href="#content" title="Skip to content">{}</a>')[0])
 """<Result ('Skip to content',) {}>"""
 
 # Get content or html
