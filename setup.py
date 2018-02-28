@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="htmlparsing",
-    version="0.1.2",
+    version="0.1.3",
     description="Pure HTML parsing library.",
     author="Jiuli Gao",
     author_email="gaojiuli@gmail.com",
@@ -15,7 +15,7 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     install_requires=[
-        'colorama',
+        'parse',
         'lxml',
         'html2text'
     ],

@@ -1,4 +1,5 @@
 import requests
+
 from htmlparsing import Element, HTMLParsing, Text, Attr, Parse
 
 url = 'https://python.org/'
