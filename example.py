@@ -1,12 +1,13 @@
-import requests
+from pprint import pprint
 
-from htmlparsing import Element
+import requests
+from htmlparsing import Element, HTMLParsing, Text, Attr
 
 url = 'https://python.org/'
 r = requests.get(url)
 
 # init
-e = Element(text=r.text, base_url=url)
+e = Element(text=r.text)
 
 # Get links
 print(e.links)
@@ -41,3 +42,11 @@ print(e.xpath('//a')[5].html)
 print(e.xpath('//a')[5].markdown)
 """[PyPI](https://pypi.python.org/ "Python Package Index")"""
 
+url = 'https://news.ycombinator.com/'
+
+r = requests.get(url)
+
+results = HTMLParsing(r.text).list('.athing', {'title': Text('a.storylink'),
+                                               'link': Attr('a.storylink', 'href')})
+
+pprint(results)
