@@ -1,33 +1,55 @@
 # HTML Parsing
 
-No Pain HTML parsing library. A wrapper of lxml.
+No Pain HTML parsing library.
 
 
 ## Installation
 
 ```python
 pip install htmlparsing
-
-# or
-
-pip install git+https://github.com/gaojiuli/htmlparsing
 ```
 
 ## Usage
 
+
+### Parse list
+
 ```python
 import requests
+from htmlparsing import Element, HTMLParsing, Text, Attr, Parse, HTML, Markdown
 
-url = 'https://python.org'
+url = 'https://news.ycombinator.com/'
+r = requests.get(url)
+article_list = HTMLParsing(r.text).list('.athing', {'title': Text('a.storylink'), # css selector
+                                                    'link': Attr('a.storylink', 'href')})
+print(article_list)
+
+```
+### Parse detail
+
+```python
+import requests
+from htmlparsing import Element, HTMLParsing, Text, Attr, Parse
+
+url = 'https://news.ycombinator.com/item?id=16476454'
+r = requests.get(url)
+article_detail = HTMLParsing(r.text).detail({'title': Text('a.storylink'),
+                                             'points': Parse('span.score', '>{} points'),
+                                             'link': Attr('a.storylink', 'href')})
+print(article_detail)
+
+```
+
+### Element
+
+```python
+
+import requests
+from htmlparsing import Element
+url = 'https://python.org/'
 r = requests.get(url)
 
-# Init
-
-from htmlparsing import Element
-e = Element(text=r.text, base_url=url)
-
-# Usage
-
+e = Element(text=r.text)
 e.links
 e.absolute_links
 e.xpath('//a')[0].attrs

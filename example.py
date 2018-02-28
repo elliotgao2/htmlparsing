@@ -1,7 +1,5 @@
-from pprint import pprint
-
 import requests
-from htmlparsing import Element, HTMLParsing, Text, Attr
+from htmlparsing import Element, HTMLParsing, Text, Attr, Parse
 
 url = 'https://python.org/'
 r = requests.get(url)
@@ -43,10 +41,14 @@ print(e.xpath('//a')[5].markdown)
 """[PyPI](https://pypi.python.org/ "Python Package Index")"""
 
 url = 'https://news.ycombinator.com/'
-
 r = requests.get(url)
+article_list = HTMLParsing(r.text).list('.athing', {'title': Text('a.storylink'),
+                                                    'link': Attr('a.storylink', 'href')})
+print(article_list)
 
-results = HTMLParsing(r.text).list('.athing', {'title': Text('a.storylink'),
-                                               'link': Attr('a.storylink', 'href')})
-
-pprint(results)
+url = 'https://news.ycombinator.com/item?id=16476454'
+r = requests.get(url)
+article_detail = HTMLParsing(r.text).detail({'title': Text('a.storylink'),
+                                             'points': Parse('span.score', '>{} points'),
+                                             'link': Attr('a.storylink', 'href')})
+print(article_detail)

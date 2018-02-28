@@ -43,10 +43,10 @@ class Element:
         return set(['{}/{}'.format(base_url.strip('/'), link.lstrip('/')) for link in self.links if ':' not in link])
 
     def parse(self, template: str):
-        return parse_search(template, self.html)
+        return parse_search(template, self.html)[0]
 
     def parse_all(self, template: str):
-        return [r for r in findall(template, self.html)]
+        return [r[0] for r in findall(template, self.html)]
 
     def css(self, selector: str):
         return [Element(html.tostring(e).decode().strip()) for e in self.element.cssselect(selector)]
@@ -95,9 +95,9 @@ class Parse(Selector):
 
     def parse(self, element: Element):
         if self.many:
-            return element.css(self.selector)[0].parse(self.template)
-        else:
             return element.css(self.selector)[0].parse_all(self.template)
+        else:
+            return element.css(self.selector)[0].parse(self.template)
 
 
 class HTMLParsing:
