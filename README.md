@@ -37,7 +37,6 @@ article_detail = HTMLParsing(r.text).detail({'title': Text('a.storylink'),
                                              'points': Parse('span.score', '>{} points'),
                                              'link': Attr('a.storylink', 'href')})
 print(article_detail)
-
 ```
 
 ### Element
