@@ -5,6 +5,8 @@ from lxml import html
 from parse import findall
 from parse import search as parse_search
 
+__all__ = ["Element", "HTMLParsing", "HTML", "Text", "Attr", "Markdown", "Parse"]
+
 
 class AttributeDict(dict):
     def __getattr__(self, attr):
