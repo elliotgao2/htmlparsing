@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="htmlparsing",
-    version="0.1.4",
+    version="0.1.5",
     description="Pure HTML parsing library.",
     author="Jiuli Gao",
     author_email="gaojiuli@gmail.com",
@@ -19,7 +19,6 @@ setup(
         'lxml',
         'html2text'
     ],
-    packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
 )
