@@ -53,25 +53,3 @@ article_detail = HTMLParsing(r.text).detail({'title': Text('a.storylink'),
                                              'points': Parse('span.score', '>{} points'),
                                              'link': Attr('a.storylink', 'href')})
 print(article_detail)
-
-
-from setuptools import find_packages, setup
-
-setup(
-    name="htmlparsing",
-    version="0.1.0",
-    description="Pure HTML parsing library.",
-    author="Jiuli Gao",
-    author_email="gaojiuli@gmail.com",
-    url='https://github.com/gaojiuli/htmlparsing',
-    classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Intended Audience :: Developers',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-    ],
-    packages=find_packages(),
-    py_modules=['htmlparsing'],
-    include_package_data=True,
-    zip_safe=False,
-)
