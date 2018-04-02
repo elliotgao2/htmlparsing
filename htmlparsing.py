@@ -1,19 +1,10 @@
+from collections import defaultdict
 from typing import Dict
 
 import html2text
 from lxml import html
 from parse import findall
 from parse import search as parse_search
-
-__all__ = ["Element", "HTMLParsing", "HTML", "Text", "Attr", "Markdown", "Parse"]
-
-
-class AttributeDict(dict):
-    def __getattr__(self, attr):
-        return self[attr]
-
-    def __setattr__(self, attr, value):
-        self[attr] = value
 
 
 class Element:
@@ -35,7 +26,9 @@ class Element:
 
     @property
     def attrs(self):
-        return AttributeDict(self.element.items())
+        r = defaultdict(str)
+        r.update(self.element.items())
+        return r
 
     @property
     def links(self):
@@ -57,58 +50,30 @@ class Element:
         return [Element(html.tostring(e).decode().strip()) for e in self.element.xpath(selector)]
 
 
-class Selector:
-    def __init__(self, selector: str):
-        self.selector = selector
-
-    def parse(self, element: Element):
-        raise NotImplemented
-
-
-class Text(Selector):
-    def parse(self, element: Element):
-        return element.css(self.selector)[0].text
-
-
-class Attr(Selector):
-    def __init__(self, selector: str, attr: str):
-        super().__init__(selector)
-        self.attr = attr
-
-    def parse(self, element: Element):
-        return element.css(self.selector)[0].attrs[self.attr]
-
-
-class HTML(Selector):
-    def parse(self, element: Element):
-        return element.css(self.selector)[0].html
-
-
-class Markdown(Selector):
-    def parse(self, element: Element):
-        return element.css(self.selector)[0].markdown
-
-
-class Parse(Selector):
-    def __init__(self, selector: str, template: str, many: bool = False):
-        super().__init__(selector)
-        self.template = template
-        self.many = many
-
-    def parse(self, element: Element):
-        if self.many:
-            return element.css(self.selector)[0].parse_all(self.template)
-        else:
-            return element.css(self.selector)[0].parse(self.template)
-
-
-class HTMLParsing:
+class HTML:
     def __init__(self, text: str):
         self.html = text
         self.element = Element(text)
 
-    def detail(self, fields: Dict[str, Selector]):
-        return {field: selector.parse(self.element) for field, selector in fields.items()}
+    def detail(self, fields: Dict[str, str]):
+        results = {}
+        for field, selector in fields.items():
+            try:
+                e = self.element.css(selector)[0]
+                result = {'text': e.text,
+                          'href': e.attrs['href'],
+                          'title': e.attrs['title'],
+                          'src': e.attrs['src']}
+                if result.get('src'):
+                    result['type'] = 'image'
+                elif result.get('href'):
+                    result['type'] = 'link'
+                else:
+                    result['type'] = 'text'
+                results[field] = result
+            except:
+                pass
+        return results
 
-    def list(self, selector: str, fields: Dict[str, Selector]):
-        return [HTMLParsing(e.html).detail(fields) for e in self.element.css(selector)]
+    def list(self, selector: str, fields: Dict[str, str]):
+        return [HTML(e.html).detail(fields) for e in self.element.css(selector)]
